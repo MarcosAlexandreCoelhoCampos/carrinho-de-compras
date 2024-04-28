@@ -84,8 +84,6 @@ const ShoppingCart = styled.table`
 
 const Table = () => {
   const [foodItems, setFoodItems] = useState<ItemData[]>([]);
-  const [totalAvailable, setTotalAvailable] = useState(0);
-  const [totalSpent, setTotalSpent] = useState(0);
 
   useEffect(() => {
     getFoodItems().then((response) => {
@@ -98,11 +96,8 @@ const Table = () => {
       <Header>
         <MaxWidth>
           <HeaderContent>
-            <MyAmount setTotalAvailable={setTotalAvailable} />
-            <TotalAmount
-              totalAvailable={totalAvailable}
-              totalSpent={totalSpent}
-            />
+            <MyAmount />
+            <TotalAmount />
           </HeaderContent>
         </MaxWidth>
       </Header>
@@ -123,11 +118,7 @@ const Table = () => {
             {foodItems.map((item, index) => {
               return (
                 <React.Fragment key={index}>
-                  <TableItem
-                    item={item}
-                    totalSpent={totalSpent}
-                    setTotalSpent={setTotalSpent}
-                  />
+                  <TableItem item={item} />
                 </React.Fragment>
               );
             })}

@@ -1,7 +1,6 @@
-import React from 'react';
 import styled from 'styled-components';
-import { TotalAmountData } from './Interface';
 import FormatNumber from '../functions/FormatNumber';
+import { useClientContext } from '../contexts/ClientContext';
 
 const TotalAmountContent = styled.div`
   display: flex;
@@ -23,19 +22,19 @@ const AvailableAmount = styled.div<{ $totalLeftover: number }>`
   }
 `;
 
-const TotalAmount: React.FC<TotalAmountData> = ({
-  totalAvailable,
-  totalSpent,
-}) => {
-  const totalLeftover: number = totalAvailable - totalSpent;
+const TotalAmount = () => {
+  const { alreadySpent, totalLeftover } = useClientContext();
+
   return (
     <TotalAmountContent>
-      <div id='total-amount'>Você já gastou R$ {FormatNumber(totalSpent)}</div>
+      <div id='total-amount'>
+        Você já gastou R$ {FormatNumber(alreadySpent)}
+      </div>
       <AvailableAmount id='available-amount' $totalLeftover={totalLeftover}>
         {`${totalLeftover >= 0 ? 'Está sobrando ' : 'Está faltando '}`}
         <span>
           R$
-          {' ' + FormatNumber(totalLeftover)}
+          {' ' + FormatNumber(Math.abs(totalLeftover))}
         </span>
       </AvailableAmount>
     </TotalAmountContent>

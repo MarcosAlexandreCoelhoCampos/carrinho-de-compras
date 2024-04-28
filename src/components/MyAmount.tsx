@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { MyAmountData } from './Interface';
 import FormatNumber from '../functions/FormatNumber';
+import { useClientContext } from '../contexts/ClientContext';
 
 const TotalAmountContainer = styled.div`
   display: flex;
@@ -34,9 +34,11 @@ const TotalAmountValue = styled.input`
   }
 `;
 
-const MyAmount: React.FC<MyAmountData> = ({ setTotalAvailable }) => {
+const MyAmount = () => {
   const [totalAmountValue, setTotalAmountValue] =
     useState<React.SetStateAction<string>>('0,00');
+
+  const { setClientAmount } = useClientContext();
 
   const treatAndSendValue = (
     event:
@@ -47,10 +49,10 @@ const MyAmount: React.FC<MyAmountData> = ({ setTotalAvailable }) => {
       Math.abs(+event.currentTarget.value.replace(',', '.')).toFixed(2)
     );
     if (isNaN(valueToNumber)) {
-      setTotalAvailable(0);
+      setClientAmount(0);
       setTotalAmountValue('0,00');
     } else {
-      setTotalAvailable(valueToNumber);
+      setClientAmount(valueToNumber);
       setTotalAmountValue(FormatNumber(valueToNumber));
     }
   };

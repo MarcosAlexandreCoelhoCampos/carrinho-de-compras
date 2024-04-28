@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { TableItemData } from './Interface';
 import FormatNumber from '../functions/FormatNumber';
+import { useClientContext } from '../contexts/ClientContext';
 
 const ShoppingCartItemQuantity = styled.td`
   div {
@@ -45,13 +46,11 @@ const PlusDecreasesButton = styled.button<{ $decrease?: boolean }>`
   }
 `;
 
-const TableItem: React.FC<TableItemData> = ({
-  item,
-  totalSpent,
-  setTotalSpent,
-}) => {
+const TableItem: React.FC<TableItemData> = ({ item }) => {
   const [itemQuantity, setItemQuantity] = useState(0);
   const totalSpentItem = itemQuantity * item.price;
+
+  const { alreadySpent, setAlreadySpent } = useClientContext();
 
   return (
     <tr>
@@ -65,7 +64,7 @@ const TableItem: React.FC<TableItemData> = ({
             onClick={() => {
               if (itemQuantity - 1 >= 0) {
                 setItemQuantity(itemQuantity - 1);
-                setTotalSpent(totalSpent - item.price);
+                setAlreadySpent(alreadySpent - item.price);
               }
             }}
             title={`Diminuir a quantidade de ${item.name}`}
@@ -74,7 +73,7 @@ const TableItem: React.FC<TableItemData> = ({
           <PlusDecreasesButton
             onClick={() => {
               setItemQuantity(itemQuantity + 1);
-              setTotalSpent(totalSpent + item.price);
+              setAlreadySpent(alreadySpent + item.price);
             }}
             title={`Aumentar a quantidade de ${item.name}`}
           ></PlusDecreasesButton>
