@@ -8,7 +8,8 @@ const TotalAmount = () => {
   return (
     <S.TotalAmountContent>
       <div id='total-amount'>
-        Você já gastou R$ {FormatNumber(alreadySpent)}
+        Você já gastou
+        <span>R$ {FormatNumber(alreadySpent)}</span>
       </div>
       <S.AvailableAmount id='available-amount' $totalLeftover={totalLeftover}>
         {`${totalLeftover >= 0 ? 'Está sobrando ' : 'Está faltando '}`}
