@@ -1,38 +1,7 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
-import FormatNumber from '../functions/FormatNumber';
-import { useClientContext } from '../contexts/ClientContext';
-
-const TotalAmountContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  white-space: wrap;
-  flex-wrap: wrap;
-  span {
-    white-space: nowrap;
-  }
-`;
-
-const TotalAmountContent = styled.div`
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
-`;
-
-const TotalAmountValue = styled.input`
-  color: #fffcf2;
-  background-color: #00000000;
-  font-size: 1.5rem;
-  width: min-content;
-  box-shadow: none;
-  box-sizing: border-box;
-  border: 2px solid #fffcf2;
-  padding: 0px 0px 0px 5px;
-  @media (max-width: 500px) {
-    font-size: 1.25rem;
-  }
-`;
+import FormatNumber from '../../functions/FormatNumber';
+import { useClientContext } from '../../contexts/ClientContext';
+import * as S from './S.MyAmount';
 
 const MyAmount = () => {
   const [totalAmountValue, setTotalAmountValue] =
@@ -48,6 +17,7 @@ const MyAmount = () => {
     const valueToNumber = Number(
       Math.abs(+event.currentTarget.value.replace(',', '.')).toFixed(2)
     );
+
     if (isNaN(valueToNumber)) {
       setClientAmount(0);
       setTotalAmountValue('0,00');
@@ -58,14 +28,13 @@ const MyAmount = () => {
   };
 
   return (
-    <TotalAmountContainer>
-      <span>Total Disponível: </span>
-      <TotalAmountContent>
+    <S.TotalAmountContainer>
+      <p>Total Disponível: </p>
+      <S.TotalAmountContent>
         R$
-        <TotalAmountValue
-          style={{ marginLeft: '8px' }}
+        <S.TotalAmountValue
           value={`${totalAmountValue}`}
-          type='string'
+          type='text'
           min='0'
           title='Insira o valor total disponível para as compras'
           onChange={(i) => {
@@ -74,13 +43,11 @@ const MyAmount = () => {
           }}
           onBlur={treatAndSendValue}
           onKeyDown={(event) => {
-            if (event.key === 'Enter') {
-              treatAndSendValue(event);
-            }
+            if (event.key === 'Enter') treatAndSendValue(event);
           }}
         />
-      </TotalAmountContent>
-    </TotalAmountContainer>
+      </S.TotalAmountContent>
+    </S.TotalAmountContainer>
   );
 };
 

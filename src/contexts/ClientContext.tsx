@@ -1,16 +1,8 @@
-import { createContext, useState, ReactNode, useContext } from 'react';
-
-export interface ClientContextData {
-  clientAmount: number;
-  setClientAmount: (value: number) => void;
-  alreadySpent: number;
-  setAlreadySpent: (value: number) => void;
-  totalLeftover: number;
-}
-
-interface ClientContextProviderProps {
-  children: ReactNode;
-}
+import { createContext, useState, useContext } from 'react';
+import {
+  ClientContextData,
+  ClientContextProviderProps,
+} from '../interfaces/Interface';
 
 const ClientContext = createContext<ClientContextData>({} as ClientContextData);
 
